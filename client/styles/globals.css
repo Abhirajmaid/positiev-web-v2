@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #0a0a0a;
+  --background: #fafafa;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .animate-reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .animate-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-heading {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-subtext {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-cta {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-heading {
+  animation: hero-heading 0.8s ease-out 0.1s forwards;
+}
+
+.animate-hero-subtext {
+  animation: hero-subtext 0.6s ease-out 0.4s forwards;
+}
+
+.animate-hero-cta {
+  animation: hero-cta 0.5s ease-out 0.6s forwards;
+}
