@@ -17,6 +17,8 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   const isTransparent = pathname === '/';
 
   return (
@@ -39,18 +41,32 @@ export function Navbar() {
           Positiev
         </Link>
 
-        <ul className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <li key={link.href}>
+        <ul className="hidden md:flex flex-row items-center gap-8 relative">
+          {navLinks.map((link, index) => (
+            <li key={link.href} className="relative z-10">
               <Link
                 href={link.href}
-                className={
-                  isTransparent
-                    ? 'text-white/90 hover:text-white transition-opacity text-sm font-medium'
-                    : 'text-neutral-600 hover:text-black font-medium text-sm transition-colors'
-                }
+                className={`
+                  group relative z-10 inline-flex overflow-hidden py-2 px-1 text-sm font-semibold transition-colors duration-200
+                  ${isTransparent
+                    ? hoveredIndex === index
+                      ? 'text-blue-700'
+                      : 'text-white'
+                    : hoveredIndex === index
+                      ? 'text-neutral-900'
+                      : 'text-neutral-600'}
+                `}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
-                {link.label}
+                <span className="relative inline-flex h-[1.5em] items-center justify-center overflow-hidden">
+                  <span className="inline-flex min-w-0 items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
+                    {link.label}
+                  </span>
+                  <span className="absolute inset-x-0 top-0 inline-flex min-w-0 translate-y-full items-center justify-center transition-transform duration-300 ease-in-out group-hover:translate-y-0">
+                    {link.label}
+                  </span>
+                </span>
               </Link>
             </li>
           ))}

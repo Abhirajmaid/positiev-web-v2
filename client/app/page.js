@@ -1,18 +1,22 @@
-import { Hero } from '@/components/hero/Hero';
+import { Hero } from '@/components/sections/Hero';
+import { SlideGallery } from '@/components/sections/SlideGallery.jsx';
+import { BrandCarousel } from '@/components/sections/BrandCarousel';
 import { WhoWeServe } from '@/components/sections/WhoWeServe';
 import { IntegratedModel } from '@/components/sections/IntegratedModel';
-import { Ecosystem } from '@/components/sections/Ecosystem';
-import { PartnerLogos } from '@/components/sections/PartnerLogos';
+import { Testimonials } from '@/components/sections/Testimonials';
+// import { PartnerLogos } from '@/components/sections/PartnerLogos';
 import { CTASection } from '@/components/layout/CTASection';
 
 export default function HomePage() {
   return (
     <>
       <Hero />
+      <SlideGallery />
+      <BrandCarousel />
       <WhoWeServe />
       <IntegratedModel />
-      <Ecosystem />
-      <PartnerLogos />
+      <Testimonials />
+      {/* <PartnerLogos /> */}
       <CTASection
         title="Ready to transform your mobility business?"
         subtitle="Join OEMs, dealers, and fleets already partnering with us."
