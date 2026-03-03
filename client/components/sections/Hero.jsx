@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
 
 export function Hero() {
   return (
@@ -31,12 +31,13 @@ export function Hero() {
           <p className="text-lg md:text-xl text-white/90 animate-hero-subtext max-w-2xl">
           We provide the financial and operational infrastructure to scale EV adoption across OEMs, dealerships, and fleets.
           </p>
-          <Link
+          <Button
             href="/vehicles"
-            className="rounded-full px-8 py-4 bg-black text-white font-medium shadow-xl hover:bg-gray-800 hover:scale-105 transition-all duration-300 inline-block animate-hero-cta"
+            variant="primary"
+            className="shadow-xl hover:scale-105 transition-transform duration-300 animate-hero-cta !py-4 !px-8"
           >
-            Partner With Us 
-          </Link>
+            Partner With Us
+          </Button>
         </div>
       </div>
     </section>

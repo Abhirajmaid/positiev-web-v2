@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/Button';
 
 const navLinks = [
@@ -10,51 +10,64 @@ const navLinks = [
   { href: '/solutions', label: 'Solutions' },
   { href: '/franchise', label: 'Franchise' },
   { href: '/fleet-leasing', label: 'Fleet Leasing' },
-  { href: '/investors', label: 'Investors' },
-  { href: '/contact', label: 'Contact' },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const isTransparent = pathname === '/';
 
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navBase =
+    'fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out pt-4 px-4 sm:px-6 lg:px-8';
+  const capsuleDefault = isTransparent
+    ? ''
+    : 'bg-white/95 border border-neutral-100';
+  const capsuleScrolled = isTransparent
+    ? 'bg-black/20 backdrop-blur-lg border border-white/20 shadow-lg'
+    : 'bg-white/80 backdrop-blur-lg border border-neutral-200 shadow-lg';
+  const capsuleClassName = isScrolled ? capsuleScrolled : capsuleDefault;
+  const navClassName = navBase;
+
+  const innerPadding = isScrolled ? 'py-3' : 'py-4';
+  const linkLight = isTransparent ? 'text-white' : 'text-neutral-600';
+  const linkLightHover = isTransparent ? 'text-blue-400' : 'text-neutral-900';
+  const logoLight = isTransparent ? 'text-white' : 'text-neutral-900';
+  const btnTransparent = isTransparent
+    ? '!py-2 !bg-white !text-black hover:!bg-neutral-100'
+    : '!py-2';
+  const mobileBorder = isTransparent ? 'border-white/20' : 'border-neutral-200';
+  const hamburgerColor = isTransparent ? 'bg-white' : 'bg-black';
+
   return (
-    <nav
-      className={
-        isTransparent
-          ? 'absolute top-0 left-0 w-full z-20'
-          : 'sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-100'
-      }
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex items-center justify-between">
+    <nav className={navClassName}>
+      <div
+        className={`max-w-7xl mx-auto rounded-full ${capsuleClassName} px-6 lg:px-10 ${innerPadding} flex items-center justify-between gap-8 transition-all duration-300 ease-in-out`}
+      >
         <Link
           href="/"
-          className={
-            isTransparent
-              ? 'text-white font-semibold text-lg hover:opacity-90 transition-opacity'
-              : 'text-xl font-semibold tracking-tight text-neutral-900 hover:opacity-90 transition-opacity'
-          }
+          className={`font-semibold text-lg md:text-xl tracking-tight hover:opacity-90 transition-opacity shrink-0 ${logoLight}`}
         >
           Positiev
         </Link>
 
-        <ul className="hidden md:flex flex-row items-center gap-8 relative">
+        <ul className="hidden md:flex flex-row items-center gap-6 relative flex-1 justify-center">
           {navLinks.map((link, index) => (
             <li key={link.href} className="relative z-10">
               <Link
                 href={link.href}
                 className={`
                   group relative z-10 inline-flex overflow-hidden py-2 px-1 text-sm font-semibold transition-colors duration-200
-                  ${isTransparent
-                    ? hoveredIndex === index
-                      ? 'text-blue-700'
-                      : 'text-white'
-                    : hoveredIndex === index
-                      ? 'text-neutral-900'
-                      : 'text-neutral-600'}
+                  ${hoveredIndex === index ? linkLightHover : linkLight}
                 `}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -72,27 +85,8 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button
-            href="/franchise"
-            variant="secondary"
-            className={
-              isTransparent
-                ? '!py-2 !border-white !text-white hover:!bg-white hover:!text-black'
-                : '!py-2'
-            }
-          >
-            Become Franchise
-          </Button>
-          <Button
-            href="/contact"
-            variant="primary"
-            className={
-              isTransparent
-                ? '!py-2 !bg-white !text-black hover:!bg-neutral-100'
-                : '!py-2'
-            }
-          >
+        <div className="hidden md:flex items-center shrink-0">
+          <Button href="/contact" variant="primary" className={btnTransparent}>
             Contact
           </Button>
         </div>
@@ -103,23 +97,15 @@ export function Navbar() {
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          <span
-            className={`block w-6 h-0.5 mb-1 ${isTransparent ? 'bg-white' : 'bg-black'}`}
-          />
-          <span
-            className={`block w-6 h-0.5 mb-1 ${isTransparent ? 'bg-white' : 'bg-black'}`}
-          />
-          <span
-            className={`block w-6 h-0.5 ${isTransparent ? 'bg-white' : 'bg-black'}`}
-          />
+          <span className={`block w-5 h-0.5 mb-1 ${hamburgerColor}`} />
+          <span className={`block w-8 h-0.5 mb-1 ${hamburgerColor}`} />
+          <span className={`block w-8 h-0.5 ${hamburgerColor}`} />
         </button>
       </div>
 
       {open && (
         <div
-          className={`md:hidden py-4 px-6 border-t ${
-            isTransparent ? 'border-white/20' : 'border-neutral-100'
-          }`}
+          className={`md:hidden py-4 px-6 border-t ${mobileBorder} ${isScrolled ? 'bg-black/10 backdrop-blur-lg' : ''}`}
         >
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
@@ -137,16 +123,13 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
-            <li className="pt-4 flex flex-col gap-2">
+            <li className="pt-4">
               <Button
-                href="/franchise"
-                variant="secondary"
+                href="/contact"
+                variant="primary"
                 className="w-full !py-2"
                 onClick={() => setOpen(false)}
               >
-                Become Franchise
-              </Button>
-              <Button href="/contact" variant="primary" className="w-full !py-2" onClick={() => setOpen(false)}>
                 Contact
               </Button>
             </li>

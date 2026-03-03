@@ -1,9 +1,13 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { Heading } from '@/components/ui/Heading';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const pillars = [
   {
@@ -25,8 +29,65 @@ const spring = { type: 'spring', stiffness: 350, damping: 30 };
 export function IntegratedModel() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [pillRect, setPillRect] = useState({ left: 0, top: 0, width: 0, height: 0 });
+  const sectionRef = useRef(null);
+  const headlineBlockRef = useRef(null);
   const gridRef = useRef(null);
   const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const headlineBlock = headlineBlockRef.current;
+    const cards = cardRefs.current;
+
+    if (!section || !headlineBlock || !cards.length) return;
+
+    const headingEl = headlineBlock.children[0];
+    const subtitleEl = headlineBlock.children[1];
+    if (!headingEl || !subtitleEl) return;
+
+    gsap.set([headingEl, subtitleEl], { x: -80, opacity: 0 });
+    gsap.set(cards, { opacity: 0, y: 40 });
+
+    const headlineTl = gsap.timeline({ paused: true });
+    headlineTl
+      .to(headingEl, { x: 0, opacity: 1, duration: 1, ease: 'power3.out' }, 0)
+      .to(subtitleEl, { x: 0, opacity: 1, duration: 1, ease: 'power3.out' }, 0.2);
+
+    const cardTl = gsap.timeline({ paused: true });
+    cardTl
+      .to(cards[0], { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 1)
+      .to(cards[1], { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 2)
+      .to(cards[2], { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 3);
+
+    let hasPlayed = false;
+    const playAnimations = () => {
+      if (hasPlayed) return;
+      hasPlayed = true;
+      headlineTl.play();
+      cardTl.play();
+    };
+
+    const st = ScrollTrigger.create({
+      trigger: section,
+      start: 'top 85%',
+      once: true,
+      onEnter: playAnimations,
+    });
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 0;
+    if (rect.top < viewportHeight * 0.85) {
+      playAnimations();
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === section) t.kill();
+      });
+      headlineTl.kill();
+      cardTl.kill();
+    };
+  }, []);
 
   const handleMouseEnter = useCallback((index) => {
     setHoveredIndex(index);
@@ -49,9 +110,12 @@ export function IntegratedModel() {
   }, []);
 
   return (
-    <section className="py-20 lg:py-32 bg-white text-black relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="py-20 lg:py-32 text-black relative overflow-hidden"
+    >
       <Container>
-        <div className="max-w-3xl mb-12 lg:mb-16">
+        <div ref={headlineBlockRef} className="max-w-3xl mb-12 lg:mb-16">
           <Heading as="h2" size="section" className="mb-4 text-black">
             Integrated lease + infra + maintenance
           </Heading>
@@ -85,7 +149,7 @@ export function IntegratedModel() {
               strokeLinecap="round"
               d="M 15 50 L 50 50 L 85 50 L 15 50"
               animate={{ strokeDashoffset: [0, -20] }}
-              transition={{ strokeDashoffset: { duration: 3, repeat: Infinity, ease: 'linear' } }}
+              transition={{ strokeDashoffset: { duration: 2, repeat: Infinity, ease: 'linear' } }}
             />
           </svg>
 

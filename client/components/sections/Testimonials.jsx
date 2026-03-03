@@ -1,7 +1,7 @@
 'use client';
 
 import { Container } from '@/components/ui/Container';
-import { FeaturedTestimonialCard, StandardTestimonialCard } from './TestimonialCard';
+import { MediaOnlyCard, StandardTestimonialCard } from './TestimonialCard';
 
 const SUBTEXT =
   'Trusted by OEMs, dealers, and fleet partners worldwide for integrated mobility solutions.';
@@ -14,7 +14,7 @@ const TESTIMONIALS = [
     mediaType: 'video',
     rating: 5.0,
     quote:
-      'Positiev’s integrated platform transformed how we manage our fleet. Real-time visibility and seamless dealer coordination have made operations smoother than ever.',
+      'positiev has transformed how we manage our fleet. Real-time visibility and seamless dealer coordination have made operations smoother than ever.',
     name: 'Rajesh Kumar',
     role: 'Fleet Operations Director',
   },
@@ -68,22 +68,23 @@ export function Testimonials() {
           </p>
         </header>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-          {/* Left media card (spans 2 rows on desktop) */}
-          <div className="sm:col-span-2 lg:col-span-1 lg:row-span-2">
-            <FeaturedTestimonialCard
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:grid-rows-2 lg:gap-8 lg:h-[520px] items-stretch">
+          <div className="w-full h-full min-h-[280px] lg:min-h-0">
+            <MediaOnlyCard
               mediaSrc={featured.mediaSrc}
               mediaType={featured.mediaType}
+            />
+          </div>
+          <div className="w-full h-full min-h-[280px] lg:min-h-0">
+            <StandardTestimonialCard
               rating={featured.rating}
               quote={featured.quote}
               name={featured.name}
               role={featured.role}
             />
           </div>
-
-          {/* Right side: 4 standard cards (2 columns x 2 rows on desktop) */}
           {standard.slice(0, 4).map((t) => (
-            <div key={t.id}>
+            <div key={t.id} className="w-full h-full min-h-[280px] lg:min-h-0">
               <StandardTestimonialCard
                 rating={t.rating}
                 quote={t.quote}
