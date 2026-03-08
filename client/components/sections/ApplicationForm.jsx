@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
@@ -89,10 +90,10 @@ export function ApplicationForm({
   }
 
   return (
-    <section className="py-20 lg:py-32 bg-neutral-50">
+    <Section className="bg-neutral-50">
       <Container>
         {content}
       </Container>
-    </section>
+    </Section>
   );
 }

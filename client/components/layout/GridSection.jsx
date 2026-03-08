@@ -1,4 +1,5 @@
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 
 export function GridSection({
@@ -31,6 +32,6 @@ export function GridSection({
         )}
         <div className={`grid grid-cols-1 gap-8 ${gridClass}`}>{children}</div>
       </Container>
-    </section>
+    </Section>
   );
 }

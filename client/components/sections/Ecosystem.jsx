@@ -1,4 +1,5 @@
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 
 const nodes = [
@@ -7,7 +8,7 @@ const nodes = [
 
 export function Ecosystem() {
   return (
-    <section className="py-20 lg:py-32 bg-neutral-50">
+    <Section className="bg-neutral-50">
       <Container>
         <Heading as="h2" size="section" className="mb-12 text-center">
           The ecosystem
@@ -23,6 +24,6 @@ export function Ecosystem() {
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

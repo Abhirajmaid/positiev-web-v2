@@ -1,11 +1,14 @@
-import { Poppins } from 'next/font/google';
+import { Saira } from 'next/font/google';
+import '@fontsource/sansation/300.css';
+import '@fontsource/sansation/400.css';
+import '@fontsource/sansation/700.css';
 import '@/styles/globals.css';
 import { AppShell } from '@/components/layout/AppShell';
 
-const poppins = Poppins({
+const saira = Saira({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-poppins',
+  variable: '--font-saira',
   display: 'swap',
 });
 
@@ -22,8 +25,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={poppins.variable}>
-      <body className={`${poppins.className} antialiased`}>
+    <html lang="en" className={saira.variable}>
+      <body className={`${saira.className} antialiased`}>
         <AppShell>{children}</AppShell>
       </body>
     </html>

@@ -1,5 +1,6 @@
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 import { ContactForms } from '@/components/sections/ContactForms';
 import { ContactPageBackground } from './ContactPageBackground';
@@ -19,14 +20,14 @@ export default function ContactPage() {
         className="bg-transparent border-transparent text-white"
         subtitleClassName="text-white"
       />
-      <section className="py-12 lg:py-20 transition-all duration-500">
+      <Section className="py-12 lg:py-20 transition-all duration-500">
         <Container>
           <Heading as="h2" size="section" className="mb-10 text-white">
             Inquiry forms
           </Heading>
           <ContactForms variant="glass" />
         </Container>
-      </section>
+      </Section>
     </div>
   );
 }

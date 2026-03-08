@@ -1,14 +1,27 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
+import { EcosystemTogether } from '@/components/sections/EcosystemTogether';
+import { CTASection } from '@/components/layout/CTASection';
 import { Footer } from '@/components/layout/Footer';
 
 export function AppShell({ children }) {
+  const pathname = usePathname();
+  const isAboutPage = pathname === '/about';
+
   return (
     <>
       <Navbar />
       <main>{children}</main>
-      <Footer />
+      {!isAboutPage && <Footer />}
+      {isAboutPage && (
+        <>
+          <EcosystemTogether />
+          <CTASection />
+          <Footer />
+        </>
+      )}
     </>
   );
 }

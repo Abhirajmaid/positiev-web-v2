@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -110,9 +111,9 @@ export function IntegratedModel() {
   }, []);
 
   return (
-    <section
+    <Section
       ref={sectionRef}
-      className="py-20 lg:py-32 text-black relative overflow-hidden"
+      className="text-black relative overflow-hidden"
     >
       <Container>
         <div ref={headlineBlockRef} className="max-w-3xl mb-12 lg:mb-16">
@@ -199,6 +200,6 @@ export function IntegratedModel() {
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

@@ -1,4 +1,5 @@
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { Heading } from '@/components/ui/Heading';
 
 export function InvestmentHighlights({ items = [] }) {
@@ -25,6 +26,6 @@ export function InvestmentHighlights({ items = [] }) {
           ))}
         </ul>
       </Container>
-    </section>
+    </Section>
   );
 }
