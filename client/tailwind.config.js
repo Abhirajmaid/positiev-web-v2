@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['var(--font-saira)', 'system-ui', 'sans-serif'],
+        sansation: ['Sansation', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
     },

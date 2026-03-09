@@ -9,12 +9,13 @@ import { Footer } from '@/components/layout/Footer';
 export function AppShell({ children }) {
   const pathname = usePathname();
   const isAboutPage = pathname === '/about';
+  const isContactPage = pathname === '/contact';
 
   return (
     <>
       <Navbar />
       <main>{children}</main>
-      {!isAboutPage && <Footer />}
+      {!isAboutPage && !isContactPage && <Footer />}
       {isAboutPage && (
         <>
           <EcosystemTogether />

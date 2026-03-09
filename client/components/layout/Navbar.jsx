@@ -28,10 +28,9 @@ export function Navbar() {
   const isTransparent = !isScrolled;
   const navBase =
     'fixed top-5 left-0 w-full z-50 overflow-visible transition-all duration-300 ease-in-out pt-5 px-6 sm:px-10 lg:px-20';
-  // Dark Apple-style glass (ref): deep translucent blue, frosted blur, subtle light border
-  // On mobile: full-width bar with rounded bottom; on desktop: pill shape
-  const glassCapsule =
-    'rounded-b-2xl md:rounded-full border border-white/15 border-t-0 md:border-t shadow-[0_4px_24px_rgba(0,0,0,0.2)] px-6 lg:px-10 py-2.5 backdrop-blur-xl bg-[#0C3560]/50';
+  // Dark Apple-style glass (ref): On mobile when scrolled: full capsule. On desktop when scrolled: no outer bg (only inner link capsule shows)
+  const glassCapsuleDesktopScrolled =
+    'rounded-t-[1.125rem] rounded-b-[1.5rem] border border-white/15 shadow-[0_4px_24px_rgba(0,0,0,0.2)] px-6 lg:px-10 py-2.5 backdrop-blur-xl bg-[#0C3560]/50 md:bg-transparent md:backdrop-blur-none md:border-0 md:shadow-none md:rounded-none';
   const linkCapsule = `absolute left-1/2 -translate-x-1/2 min-w-[320px] justify-center gap-7 rounded-full border border-white/15 px-6 py-1.5 backdrop-blur-xl transition-colors duration-300 ${
     isScrolled ? 'bg-[#000]/30' : 'bg-[#000]/25'
   }`;
@@ -50,13 +49,15 @@ export function Navbar() {
     <nav className={navBase}>
       <div
         className={`relative mx-auto flex w-full max-w-[1440px] flex-col overflow-visible transition-all duration-300 ease-in-out md:flex-row ${
-          isScrolled ? glassCapsule : ''
+          isScrolled ? glassCapsuleDesktopScrolled : ''
         }`}
       >
         <div className="flex w-full items-center justify-between gap-8">
           <Link
             href="/"
-            className="shrink-0 transition-opacity hover:opacity-90"
+            className={`shrink-0 transition-all duration-300 hover:opacity-90 ${
+              isScrolled ? 'md:opacity-0 md:invisible md:w-0 md:min-w-0 md:overflow-hidden md:pointer-events-none' : ''
+            }`}
             aria-label="PositiEV home"
           >
             <Image
@@ -117,7 +118,7 @@ export function Navbar() {
         {/* Mobile: vertical menu - only render when open so it's always visible when toggled */}
         {open && (
           <div
-            className="flex flex-col border-t border-white/15 bg-[#0C3560]/60 backdrop-blur-xl pt-4 pb-4 md:hidden"
+            className="flex flex-col rounded-b-[1.5rem] border-t border-white/15 bg-[#0C3560]/60 backdrop-blur-xl pt-4 pb-4 md:hidden"
             style={{ minHeight: 0 }}
           >
             <ul className="flex flex-col gap-0.5">

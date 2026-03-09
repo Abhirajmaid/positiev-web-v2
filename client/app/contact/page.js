@@ -1,9 +1,9 @@
-import { PageHeader } from '@/components/layout/PageHeader';
-import { Container } from '@/components/ui/Container';
-import { Section } from '@/components/ui/Section';
-import { Heading } from '@/components/ui/Heading';
-import { ContactForms } from '@/components/sections/ContactForms';
-import { ContactPageBackground } from './ContactPageBackground';
+import { ContactHero } from './ContactHero';
+import { ContactOpportunities } from '@/components/sections/ContactOpportunities';
+import { ContactCardSection } from '@/components/sections/ContactCardSection';
+import { EcosystemTogether } from '@/components/sections/EcosystemTogether';
+import { CTASection } from '@/components/layout/CTASection';
+import { Footer } from '@/components/layout/Footer';
 
 export const metadata = {
   title: 'Contact | Positiev',
@@ -12,22 +12,13 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="relative min-h-screen">
-      <ContactPageBackground />
-      <PageHeader
-        title="Let’s Connect"
-        subtitle="Connect with our experts to explore custom EV infrastructure solutions for your dealership."
-        className="bg-transparent border-transparent text-white"
-        subtitleClassName="text-white"
-      />
-      <Section className="py-12 lg:py-20 transition-all duration-500">
-        <Container>
-          <Heading as="h2" size="section" className="mb-10 text-white">
-            Inquiry forms
-          </Heading>
-          <ContactForms variant="glass" />
-        </Container>
-      </Section>
-    </div>
+    <>
+      <ContactHero />
+      <ContactOpportunities />
+      <ContactCardSection />
+      <EcosystemTogether />
+      <CTASection />
+      <Footer />
+    </>
   );
 }
