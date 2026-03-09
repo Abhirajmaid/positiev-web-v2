@@ -26,6 +26,6 @@ export function InvestmentHighlights({ items = [] }) {
           ))}
         </ul>
       </Container>
-    </Section>
+    </section>
   );
 }

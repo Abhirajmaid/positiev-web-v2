@@ -32,6 +32,6 @@ export function GridSection({
         )}
         <div className={`grid grid-cols-1 gap-8 ${gridClass}`}>{children}</div>
       </Container>
-    </Section>
+    </section>
   );
 }
